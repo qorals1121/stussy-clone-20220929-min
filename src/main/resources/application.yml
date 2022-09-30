@@ -12,6 +12,10 @@ datasource:
   username: admin
   password: 1q2w3e4r
 
+security:
+  user: min
+  password: 1234
+
 mybatis:
   mapper-locations:
     - /mappers/*.xml
