@@ -6,15 +6,16 @@ spring:
   mvc:
     static-path-pattern: /static/**
 
-datasource:
-  driver-class-name: org.mariadb.jdbc.Driver
-  url: jdbc:mariadb://web-study.c6csxmxkinkd.ap-northeast-2.rds.amazonaws.com:3306/stussy-20220929-min
-  username: admin
-  password: 1q2w3e4r
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://web-study.c6csxmxkinkd.ap-northeast-2.rds.amazonaws.com:3306/stussy-20220929-min?allowMultiQueries=true
+    username: admin
+    password: 1q2w3e4r
 
-security:
-  user: min
-  password: 1234
+  security:
+    user:
+      name: admin
+      password: 1q2w3e4r
 
 mybatis:
   mapper-locations:

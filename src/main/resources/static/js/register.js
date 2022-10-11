@@ -1,9 +1,21 @@
 const registerButton = document.querySelector(".login-button");
+const registerInputs = document.querySelectorAll(".login-input");
+
+
+for(let i = 0; i < registerInputs.length; i++) {
+    registerInputs[i].onkeyup = () => {
+        if(window.event.keyCode == 13){
+            if(i != 3) {
+                registerInputs[i + 1].focus();
+            }else {
+                registerButton.click();
+            }
+        }
+    }
+}
 
 registerButton.onclick = () => {
 
-    const registerInputs = document.querySelectorAll(".login-input")
-    
     let registerInfo = {
         lastName: registerInputs[0].value,
         firstName: registerInputs[1].value,
@@ -19,10 +31,28 @@ registerButton.onclick = () => {
         data: JSON.stringify(registerInfo),
         dataType: "json",
         success: (response) => {
-
+            location.replace("/account/login");
         },
         error: (error) => {
             console.log(error);
+            validationError(error.responseJSON.data);
         }
     });
+}
+
+function validationError(error) {
+    const accountErrors = document.querySelector(".account-errors");
+    const accountErrorList = accountErrors.querySelector("ul");
+
+    const errorValues = Object.values(error);
+
+    accountErrorList.innerHTML = "";
+
+    errorValues.forEach((value) => {
+        accountErrorList.innerHTML += `
+            <li>${value}</li>
+        `;
+    });
+
+    accountErrors.classList.remove("errors-invisible");
 }
