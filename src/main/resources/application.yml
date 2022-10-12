@@ -20,3 +20,6 @@ spring:
 mybatis:
   mapper-locations:
     - /mappers/*.xml
+
+file:
+  path: C:/mingyeong/web/springboot/stussy-clone-20220929-min/upload/
