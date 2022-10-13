@@ -18,8 +18,8 @@ public class ProductAdditionReqDto {
     @NotBlank(message = "빈 값일 수 없습니다.", groups = ValidationGroups.NotBlankGroup.class)
     private String name;
 
-    @Max(value = 100000, message = "최대 금액은 100만원 까지만 설정 가능합니다.")
-    @Min(value = 0, message = "최소 금액은 100원입니다.")
+    @Max(value = 1000000, message = "최대 금액은 100만원 까지만 설정 가능합니다.")
+    @Min(value = 100, message = "최소 금액은 100원입니다.")
     private int price;
 
     @NotBlank(message = "빈 값일 수 없습니다.", groups = ValidationGroups.NotBlankGroup.class)
