@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="info_shipping" column="info_shipping"></result>
         <result property="create_date" column="create_date"></result>
         <result property="update_date" column="update_date"></result>
-        <result property="productTotalCount" column="product_total_count"></result>
+        <result property="product_total_count" column="product_total_count"></result>
         <collection property="product_img_files" javaType="list" resultMap="product_img_files"></collection>
     </resultMap>
 
@@ -37,27 +37,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     >
         INSERT INTO
         product_mst
-        (select
-        0,
-        #{category},
-        IFNULL((SELECT
-        MAX(group_id)
+            (select
+            0,
+            #{category},
+            IFNULL((SELECT
+                        MAX(group_id)
+                    FROM
+                        product_mst
+                    WHERE NAME = #{name}), ifnull(MAX(group_id), 0) + 1),
+            #{name},
+            #{price},
+            #{color},
+            #{size},
+            #{info_simple},
+            #{info_detail},
+            #{info_option},
+            #{info_management},
+            #{info_shipping},
+            now(),
+            now()
         FROM
-        product_mst
-        WHERE NAME = #{name}), ifnull(MAX(group_id), 0) + 1),
-        #{name},
-        #{price},
-        #{color},
-        #{size},
-        #{info_simple},
-        #{info_detail},
-        #{info_option},
-        #{info_management},
-        #{info_shipping},
-        now(),
-        now()
-        FROM
-        product_mst
+            product_mst
         );
     </insert>
 
@@ -97,33 +97,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             pim.origin_name,
             pim.temp_name,
             pc.product_total_count
-        FROM
+        from
             (SELECT
                 *
             FROM
                 product_mst
             where
                 1 = 1
-        <if test='category != "ALL"'>
-            AND category = #{category}
-        </if>
-        <if test='"searchText != null || searchText !=""'>
-            AND name like CONCAT('%', #{searchText}, '%')
-        </if>
+            <if test='category != "ALL"'>
+                AND category = #{category}
+            </if>
+            <if test='searchText != null || searchText != ""'>
+                AND name like CONCAT('%', #{searchText}, '%')
+            </if>
             LIMIT #{index}, 10) pm
-            LEFT OUTER JOIN product_img pim ON (pim.product_id = pm.id)
-            LEFT OUTER JOIN (select
+            left outer join product_img pim ON(pim.product_id = pm.id)
+            left outer join (select
                                     count(*) as product_total_count
-                                    from
-                                        product_mst
-                                    where
-                                        1 = 1
-                                        <if test='category != "ALL"'>
-                                            AND category = #{category}
-                                        </if>
-                                        <if test='"searchText != null || searchText !=""'>
-                                            AND name like CONCAT('%', #{searchText}, '%')
-                                        </if>
-                                            ) pc on (1=1)
+                                from
+                                    product_mst
+                                where
+                                    1 = 1
+                                <if test='category != "ALL"'>
+                                    AND category = #{category}
+                                </if>
+                                <if test='searchText != null || searchText != ""'>
+                                    AND name like CONCAT('%', #{searchText}, '%')
+                                </if>
+                                ) pc on(1=1)
     </select>
 </mapper>

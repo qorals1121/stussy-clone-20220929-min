@@ -1,6 +1,8 @@
+
 const categorySelectInput = document.querySelector(".category-select .product-input");
-const searchInput = document.querySelector(".product-sarch .product-input");
-const searchButton = document.querySelector("sarch-button");
+const searchInput = document.querySelector(".product-search .product-input");
+const searchButton = document.querySelector(".search-button");
+
 
 let page = 1;
 let category = "ALL";
@@ -9,8 +11,6 @@ let searchText = "";
 window.onload = () => {
     getList();
 }
-
-
 
 function getList() {
     $.ajax({
@@ -26,13 +26,12 @@ function getList() {
         success: (response) => {
             console.log(response);
             if(response.data.length != 0) {
-            loadPageNumberButtons(response.data[0].productTotalCount);
-            addProducts(response.data);
+                loadPageNumberButtons(response.data[0].productTotalCount);
+                addProducts(response.data);
             }else {
                 alert("등록된 상품이 없습니다.");
                 location.reload();
             }
-            
         },
         error: (error) => {
             console.log(error);
