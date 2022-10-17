@@ -36,28 +36,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             keyProperty="id"
     >
         INSERT INTO
-        product_mst
+            product_mst
             (select
             0,
             #{category},
-            IFNULL((SELECT
-                        MAX(group_id)
+        IFNULL((SELECT
+                    MAX(group_id)
+                FROM
+                    product_mst
+                WHERE NAME = #{name}), ifnull(MAX(group_id), 0) + 1),
+                    #{name},
+                    #{price},
+                    #{color},
+                    #{size},
+                    #{info_simple},
+                    #{info_detail},
+                    #{info_option},
+                    #{info_management},
+                    #{info_shipping},
+                    now(),
+                    now()
                     FROM
-                        product_mst
-                    WHERE NAME = #{name}), ifnull(MAX(group_id), 0) + 1),
-            #{name},
-            #{price},
-            #{color},
-            #{size},
-            #{info_simple},
-            #{info_detail},
-            #{info_option},
-            #{info_management},
-            #{info_shipping},
-            now(),
-            now()
-        FROM
-            product_mst
+                    product_mst
         );
     </insert>
 
@@ -65,16 +65,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into
             product_img
         values
-        <foreach item="file" collection="list" separator=",">
-            (
-                0,
-                #{file.product_id},
-                #{file.origin_name},
-                #{file.temp_name},
-                now(),
-                now()
-            )
+            <foreach item="file" collection="list" separator=",">
+                    (
+                    0,
+                    #{file.product_id},
+                    #{file.origin_name},
+                    #{file.temp_name},
+                    now(),
+                    now()
+                )
         </foreach>
+
     </insert>
     <select id="getProductList" parameterType="java.util.HashMap" resultMap="product">
         SELECT
@@ -104,26 +105,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 product_mst
             where
                 1 = 1
-            <if test='category != "ALL"'>
-                AND category = #{category}
-            </if>
-            <if test='searchText != null || searchText != ""'>
-                AND name like CONCAT('%', #{searchText}, '%')
-            </if>
+                <if test='category != "ALL"'>
+                    AND category = #{category}
+                </if>
+                <if test='searchText != null || searchText != ""'>
+                    AND name like CONCAT('%', #{searchText}, '%')
+                </if>
             LIMIT #{index}, 10) pm
-            left outer join product_img pim ON(pim.product_id = pm.id)
-            left outer join (select
-                                    count(*) as product_total_count
-                                from
-                                    product_mst
-                                where
-                                    1 = 1
-                                <if test='category != "ALL"'>
-                                    AND category = #{category}
-                                </if>
-                                <if test='searchText != null || searchText != ""'>
-                                    AND name like CONCAT('%', #{searchText}, '%')
-                                </if>
-                                ) pc on(1=1)
+                left outer join product_img pim ON(pim.product_id = pm.id)
+                left outer join (select
+                count(*) as product_total_count
+            from
+                product_mst
+            where
+                1 = 1
+                <if test='category != "ALL"'>
+                    AND category = #{category}
+                </if>
+                <if test='searchText != null || searchText != ""'>
+                    AND name like CONCAT('%', #{searchText}, '%')
+                </if>
+        ) pc on(1=1)
     </select>
 </mapper>
