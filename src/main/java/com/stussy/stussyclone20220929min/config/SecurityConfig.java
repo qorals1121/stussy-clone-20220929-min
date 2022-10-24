@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
 
                 /*-------------- API --------------------*/
-                .antMatchers("/api/account/register")
+                .antMatchers("/api/account/register", "/api/collections/**")
                 .permitAll()
 
                 .anyRequest() //antMatchers 외에 다른 모든 요청들은
