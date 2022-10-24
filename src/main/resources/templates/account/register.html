@@ -1,19 +1,13 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.tymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragment/head :: head}"></head>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Account</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="/static/css/header.css">
     <link rel="stylesheet" href="/static/css/account.css">
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <title>Create Account</title>
 </head>
 <body>
 <div id="container">
-    <header th:replace="~{fragment/header.html :: header}"></header>
+    <header th:replace="~{fragment/header :: header}"></header>
     <main>
         <div class="login">
             <h1 class="login-title">ACCOUNT</h1>

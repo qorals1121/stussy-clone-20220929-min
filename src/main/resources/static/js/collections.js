@@ -1,6 +1,6 @@
-class collectionReqParam {
-    #instance = null;
-    page = 0;
+class CollectionReqParam {
+    static #instance = null;
+    #page = 0;
 
     constructor() {
         this.page = 1
@@ -8,12 +8,12 @@ class collectionReqParam {
 
     static getInstance() {
         if(this.#instance == null) {
-            this.#instance = new collectionReqParam();
+            this.#instance = new CollectionReqParam();
         }
         return this.#instance;
     }
 
-    getPage() {return this.page;}
+    getPage() {return this.#page;}
     setPage(page) {this.#page = page;}
 
     getObject() {
@@ -23,13 +23,18 @@ class collectionReqParam {
     }
 }
 
-class CollectionApi {
-    
-    getInstance() {
-        
+class CollectionsApi {
+
+    static #instance = null;
+
+    static getInstance() {
+        if(this.#instance == null) {
+            this.#instance = new CollectionsApi();
+        }
+        return this.#instance;
     }
-    
-    getColletcions(collectionReqParam) {
+
+    getCollections(collectionReqParam) {
         const uri = location.href;
         const category = uri.substring(uri.lastIndexOf("/") + 1);
         let responseData = null;
@@ -42,6 +47,7 @@ class CollectionApi {
             dataType: "json",
             success: (response) => {
                 responseData = response.data;
+                console.log(responseData);
             },
             error: (error) => {
                 console.log(error);
@@ -56,28 +62,26 @@ class CollectionsService {
     static #instance = null;
 
     static getInstance() {
-        if(this.#instanse == null) {
+        if(this.#instance == null) {
             this.#instance = new CollectionsService();
         }
         return this.#instance;
     }
-    
-    loadCollections() {
 
-        responseData = CollectionApi.getInstance().loadCollections(collectionReqParam.getInstance().getObject());
-        
+    loadCollections() {
+        const responseData = CollectionsApi.getInstance().getCollections(CollectionReqParam.getInstance().getObject());
+
         const collectionProducts = document.querySelector(".collection-products");
-        responseData.array.forEach(collection => {
-           collectionProducts.innerHTML += `
-           <ul class="collection-products">
-           <li class="collection-product">
-                <div class="product-img">
-                    <img src="/image/product/${collection.imgName}">
-                </div>
-                <div class="product-name">${collection.name}</div>
-                <div class="product-price">${collection.price}원</div>
-            </li>
-                ` 
+        responseData.forEach(collection => {
+            collectionProducts.innerHTML += `
+                <li class="collection-product">
+                    <div class="product-img">
+                        <img src="/image/product/${collection.imgName}">
+                    </div>
+                    <div class="product-name">${collection.name}</div>
+                    <div class="product-price">${collection.price}원</div>
+                </li>
+            `;
         });
     }
 

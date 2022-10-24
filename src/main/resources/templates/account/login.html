@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.tymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragment/head :: head}"></head>
 <head>
+    <link rel="stylesheet" href="/static/css/account.css">
     <title>Account</title>
 </head>
 <body>
 <div id="container">
-    <header th:replace="~{fragment/header.html :: header}"></header>
+    <header th:replace="~{fragment/header :: header}"></header>
     <main>
         <div class="login">
             <h1 class="login-title">ACCOUNT</h1>
