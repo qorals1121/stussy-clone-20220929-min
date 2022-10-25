@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class ShopPageController {
 
     @GetMapping("/collections/{category}")
-    public String loadCollections(Model model, @PathVariable String category) {
-
-        model.addAttribute("category", category);
-
+    public String loadCollections(@PathVariable String category) {
         return "shop/collections";
+    }
+
+    @GetMapping("/products/{groupId}")
+    public String loadProductDetail(@PathVariable String groupId) {
+        return "shop/products";
     }
 }

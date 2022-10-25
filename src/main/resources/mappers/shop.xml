@@ -40,4 +40,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             pm.group_id
         LIMIT #{index}, 16
     </select>
+
+    <select id="getProduct" parameterType="Integer" resultType=""></select>
 </mapper>
