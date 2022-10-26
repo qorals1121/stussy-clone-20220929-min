@@ -15,6 +15,6 @@ public class ShopPageController {
 
     @GetMapping("/products/{groupId}")
     public String loadProductDetail(@PathVariable String groupId) {
-        return "shop/products";
+        return "shop/product";
     }
 }

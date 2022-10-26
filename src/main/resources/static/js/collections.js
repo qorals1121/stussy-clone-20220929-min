@@ -18,7 +18,7 @@ class CollectionReqParam {
 
     getObject() {
         return {
-            page: this.page
+            page: this.#page
         }
     }
 }
@@ -34,6 +34,8 @@ class CollectionsApi {
         return this.#instance;
     }
 
+    groupIdLIst = new Array();
+    
     getCollections(collectionReqParam) {
         const uri = location.href;
         const category = uri.substring(uri.lastIndexOf("/") + 1);
@@ -73,6 +75,7 @@ class CollectionsService {
 
         const collectionProducts = document.querySelector(".collection-products");
         responseData.forEach(collection => {
+            this.groupIdLIst.push(collection.groupId);
             collectionProducts.innerHTML += `
                 <li class="collection-product">
                     <div class="product-img">
@@ -84,38 +87,33 @@ class CollectionsService {
             `;
         });
 
-        this.addProductClickEvent(responseData);
+        this.addProductClickEvent();
         this.addScrollEvent();
     }
 
     addScrollEvent() {
         const html = document.querySelector("html");
         const body = document.querySelector("body");
-        
         body.onscroll = () => {
             let scrollStatus = body.offsetHeight - html.clientHeight - html.scrollTop;
-            if(scrollStatus > -1 && scrollStatus < 10) {
-                CollectionsService.getInstance().setPage(Number(CollectionReqParam.getInstance().getPage()) + 1);
+            if(scrollStatus > -1 && scrollStatus < 30) {
+                CollectionReqParam.getInstance().setPage(Number(CollectionReqParam.getInstance().getPage()) + 1);
                 CollectionsService.getInstance().loadCollections();
             }
-            console.log("문서 높이 : " + body.offsetHeight)
-            console.log("html 높이 : " + html.clientHeight);
-            console.log("스크롤 탑 : " + html.scrollTop);
         }
-        
     }
 
-    addProductClickEvent(responseData) {
+    addProductClickEvent() {
         const products = document.querySelectorAll(".collection-product");
         products.forEach((product, index) => {
             product.onclick = () => {
-                location.href = `/products/${responseData[index].id}`;
+                location.href = `/products/${this.groupIdLIst[index]}`;
             }
-
-        });
+        })
     }
 }
 
 window.onload = () => {
     CollectionsService.getInstance().loadCollections();
+    
 }

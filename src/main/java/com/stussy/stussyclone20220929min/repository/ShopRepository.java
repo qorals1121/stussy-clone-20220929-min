@@ -1,6 +1,7 @@
 package com.stussy.stussyclone20220929min.repository;
 
 import com.stussy.stussyclone20220929min.domain.CollectionProduct;
+import com.stussy.stussyclone20220929min.domain.ProductDetail;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -10,4 +11,5 @@ import java.util.Map;
 public interface ShopRepository {
 
     public List<CollectionProduct> getCollectionList(Map<String, Object> map) throws Exception;
+    public List<ProductDetail> getProduct(int groupId) throws Exception;
 }

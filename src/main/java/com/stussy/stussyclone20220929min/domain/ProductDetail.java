@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.Map;
 
 @Data
 @NoArgsConstructor
@@ -16,5 +15,10 @@ public class ProductDetail {
     private int price;
     private String color;
     private String size;
-    private String imgName;
+    private String info_simple;
+    private String info_detail;
+    private String info_option;
+    private String info_management;
+    private String info_shipping;
+    private List<ProductImgFile> productImgFiles;
 }
