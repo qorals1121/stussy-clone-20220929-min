@@ -34,8 +34,6 @@ class CollectionsApi {
         return this.#instance;
     }
 
-    groupIdLIst = new Array();
-    
     getCollections(collectionReqParam) {
         const uri = location.href;
         const category = uri.substring(uri.lastIndexOf("/") + 1);
@@ -62,7 +60,6 @@ class CollectionsApi {
 
 class CollectionsService {
     static #instance = null;
-
     static getInstance() {
         if(this.#instance == null) {
             this.#instance = new CollectionsService();
@@ -70,12 +67,14 @@ class CollectionsService {
         return this.#instance;
     }
 
+    groupIdList = new Array();
+
     loadCollections() {
         const responseData = CollectionsApi.getInstance().getCollections(CollectionReqParam.getInstance().getObject());
 
         const collectionProducts = document.querySelector(".collection-products");
         responseData.forEach(collection => {
-            this.groupIdLIst.push(collection.groupId);
+            this.groupIdList.push(collection.groupId);
             collectionProducts.innerHTML += `
                 <li class="collection-product">
                     <div class="product-img">
@@ -107,7 +106,7 @@ class CollectionsService {
         const products = document.querySelectorAll(".collection-product");
         products.forEach((product, index) => {
             product.onclick = () => {
-                location.href = `/products/${this.groupIdLIst[index]}`;
+                location.href = `/products/${this.groupIdList[index]}`;
             }
         })
     }

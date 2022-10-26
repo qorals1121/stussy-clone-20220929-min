@@ -16,7 +16,7 @@ public class ShopApi {
 
     private final ShopService shopService;
 
-    @GetMapping("/api/collections/{category}")
+    @GetMapping("/collections/{category}")
     public ResponseEntity<?> getCollection(@PathVariable String category, int page) throws Exception {
 
         return ResponseEntity.ok(new CMRespDto<>(1, "Load Successfully", shopService.getCollections(category, page)));
@@ -24,6 +24,6 @@ public class ShopApi {
 
     @GetMapping("/products/{groupId}")
     public ResponseEntity<?> getProduct(@PathVariable int groupId) throws Exception {
-        return ResponseEntity.ok(new CMRespDto<>(1, "Load Successfully", shopService.getProductDetails(groupId)));
+        return ResponseEntity.ok(new CMRespDto<>(1, "Successfully", shopService.getProductDetails(groupId)));
     }
 }

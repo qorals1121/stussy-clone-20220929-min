@@ -69,27 +69,27 @@ class ProductDetailService {
         const shippingInfo = document.querySelector(".shipping-info");
 
         /* input hidden */
-        const h_groupId = document.querySelector(".#group-id");
-        const h_productName = document.querySelector(".#product-name");
-        const h_productPrice = document.querySelector(".#product-price");
+        const h_groupId = document.querySelector("#group-id");
+        const h_productName = document.querySelector("#product-name");
+        const h_productPrice = document.querySelector("#product-price");
 
         h_groupId.value = responseData.groupId;
-        h_productName = responseData.name;
-        h_productPrice = responseData.price;
+        h_productName.value = responseData.name;
+        h_productPrice.value = responseData.price;
 
         productTitle.textContent = responseData.name;
         productPrice.textContent = responseData.price;
-        simpleInfo.textContent = responseData.simpleInfo;
-        detailInfo.textContent = `<Strong>PRODUCT DETAILS</Strong>${responseData.detailInfo}</Strong>`;
-        optionInfo.textContent = responseData.optionInfo;
-        managementInfo.textContent = responseData.managementInfo;
-        shippingInfo.textContent = responseData.shippingInfo;
-
+        simpleInfo.textContent = responseData.infoSimple;
+        detailInfo.innerHTML = `<strong>PRODUCT DETAILS</strong>
+${responseData.infoDetail}`;
+        optionInfo.textContent = responseData.infoOption;
+        managementInfo.textContent = responseData.infoManagement;
+        shippingInfo.textContent = responseData.infoShipping;
     }
 
     getColorOptions(options) {
         const productColor = document.querySelector(".product-color");
-        
+
         Object.keys(options).forEach(color => {
             productColor.innerHTML += `
                 <option value="${color}">${color}</option>
@@ -105,7 +105,7 @@ class ProductDetailService {
                 productSize.innerHTML = "";
                 entry[1].forEach((size, index) => {
                     productSize.innerHTML += `
-                        <input class="size-radios" type="radio" id="size-${size}" name="size-group" value="${size}" ${index == 0 ? "checked" : ""}>
+                        <input class="size-radios" type="radio" id="size-${size}" name="productSize" value="${size}" ${index == 0 ? "checked" : ""}>
                         <label class="size-buttons" for="size-${size}">${size}</label>
                     `;
                 });
