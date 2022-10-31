@@ -13,7 +13,7 @@ import java.util.Date;
 @Component
 public class JwtProvider {
 
-    private static final secretKey = "1234";
+    private static final String secretKey = "1234";
 
     public String createToken(String subject) {
         Date now = new Date();
@@ -25,23 +25,22 @@ public class JwtProvider {
                 .setIssuedAt(now)
                 .setExpiration(expriation)
                 .setSubject(subject)
-                .claim("email", "junil@gmail.com")
                 .signWith(SignatureAlgorithm.HS256, Base64.getEncoder().encodeToString(secretKey.getBytes()))
                 .compact();
     }
 
-    public Claims ParseJwtToken(String token) {
+    public Claims parseJwtToken(String token) {
+        validationAuthorizationHeader(token);
         token = bearerRemove(token);
         return Jwts.parser()
-                .setSigningKey(secretKey)
-                .parseClaimsJwt(token)
+                .setSigningKey(Base64.getEncoder().encodeToString(secretKey.getBytes()))
+                .parseClaimsJws(token)
                 .getBody();
-
     }
 
     private void validationAuthorizationHeader(String token) {
-        if(token == null || !token.startsWith("Bearer ")) {
-            throw new IllegalArgumentException();
+        if(token == null || !token.startsWith("Bearer ")){
+            throw  new IllegalArgumentException();
         }
     }
 
@@ -49,3 +48,7 @@ public class JwtProvider {
         return token.substring("Bearer ".length());
     }
 }
+
+
+
+

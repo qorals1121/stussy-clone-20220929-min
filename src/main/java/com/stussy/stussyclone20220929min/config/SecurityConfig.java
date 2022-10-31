@@ -1,6 +1,8 @@
 package com.stussy.stussyclone20220929min.config;
 
 import com.stussy.stussyclone20220929min.handler.auth.AuthFailureHandler;
+import com.stussy.stussyclone20220929min.service.auth.PrincipalOauth2Service;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,7 +12,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @EnableWebSecurity // 기존의 WebSecurityConfiguerAdapter 클래스를 해당 SecurityConfig 로 대체하겠다.
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final PrincipalOauth2Service principalOauth2Service;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -55,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .oauth2Login()
                 .userInfoEndpoint()
-                .userService(null)
+                .userService(principalOauth2Service)
                 .and()
                 .defaultSuccessUrl("/index");
 
