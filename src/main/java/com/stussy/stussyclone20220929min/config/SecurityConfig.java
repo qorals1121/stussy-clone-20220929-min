@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
 
                 /*-------------- API --------------------*/
-                .antMatchers("/api/account/register", "/api/collections/**")
+                .antMatchers("/api/account/register", "/api/collections/**", "/api/auth/**")
                 .permitAll()
 
                 .anyRequest() //antMatchers 외에 다른 모든 요청들은
@@ -52,6 +52,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/account/login") //우리가 만든 로그인 페이지를 사용해라. GET 요청
                 .loginProcessingUrl("/account/login") //로그인 로직(PrincipalDetailsService) POST 요청
                 .failureHandler(new AuthFailureHandler())
+                .and()
+                .oauth2Login()
+                .userInfoEndpoint()
+                .userService(null)
+                .and()
                 .defaultSuccessUrl("/index");
 
     }
