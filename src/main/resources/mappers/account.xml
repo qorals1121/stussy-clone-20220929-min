@@ -23,7 +23,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="update_date" column="update_date"></result>
         <collection property="role" resultMap="role"></collection>
     </resultMap>
-    <insert id="save" parameterType="com.stussy.stussyclone20220929min.domain.User">
+    <insert id="save"
+            parameterType="com.stussy.stussyclone20220929min.domain.User"
+            useGeneratedKeys="true"
+            keyProperty="id">
         insert into
             user_mst
         values(
@@ -39,6 +42,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             now()
         )
     </insert>
+
+    <update id="updateUserOauth2" parameterType="com.stussy.stussyclone20220929min.domain.User">
+        update
+            user_mst
+        set
+            oauth_username = #{oauth_username},
+            provider = #{provider},
+            update_date = now()
+        where
+            id = #{id}
+
+    </update>
 
     <select id="findUserByEmail" parameterType="String" resultMap="user">
         select

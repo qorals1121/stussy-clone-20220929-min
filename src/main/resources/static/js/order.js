@@ -42,7 +42,7 @@ class ImportApi {
     responsePay(resp) {
         if(resp.success) {
             alert("결제 성공!");
-            this.requestPayDetails();
+            
         }else {
             alert("결제 실패!");
         }
